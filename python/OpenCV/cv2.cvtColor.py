@@ -18,3 +18,14 @@ import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 from PIL import Image
+
+im_path = '../../dataset/image/road_mark.jpeg'
+img_1 = cv2.imread(im_path)
+img_2 = Image.open(im_path)
+img_2 = np.array(img_2)
+
+plt.subplot(121)
+plt.imshow(img_1)
+plt.subplot(122)
+plt.imshow(img_2)
+plt.show()
