@@ -1,6 +1,6 @@
 # coding=utf-8
 # Syntax:
-#     cv2.resize(src, dsize[, dst[, fx[, fy[, interpolation]]]])
+#     resize(src, dsize[, dst[, fx[, fy[, interpolation]]]])
 #
 # Parameters:
 #     src: source/input image.

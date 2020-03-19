@@ -2,7 +2,7 @@
 # cv2.cvtColor() method is used to convert an image from one color space to another.
 # There are more than 150 color-space conversion methods available in OpenCV.
 # Syntax:
-#     cv2.cvtColor(src, code[, dst[, dstCn]])
+#     cvtColor(src, code[, dst[, dstCn]]) -> dst
 #
 # Parameters:
 #     src: It is the image whose color space is to be changed.
