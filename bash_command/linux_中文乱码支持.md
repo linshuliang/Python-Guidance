@@ -33,7 +33,7 @@ zh_CN GB2312
 sudo locale-gen
 ```
 
-## Step 5. 安装中文字
+## Step 5. 安装中文字体
 
 ```
 sudo apt-get install fonts-droid-fallback ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-arphic-uming
