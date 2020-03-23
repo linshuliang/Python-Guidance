@@ -15,7 +15,7 @@ LANG="zh_CN.UTF-8"
 LANGUAGE="zh_CN:zh:en_US:en"
 ```
 
-## Step 3. 修改/var/lib/locales/supported.d/local
+## Step 3. 修改文件 /var/lib/locales/supported.d/local
 
 如果没有这个文件就新建，
 如果存在就在末尾追加。
@@ -40,6 +40,8 @@ sudo apt-get install fonts-droid-fallback ttf-wqy-zenhei ttf-wqy-microhei fonts-
 ```
 
 ## Stp 6. 修改 ~/.bashrc
+
+在 `~/.bashrc` 中新增一行:
 
 ```
 export LANG=zh_CN.UTF-8
