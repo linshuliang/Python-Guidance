@@ -38,3 +38,9 @@ sudo locale-gen
 ```
 sudo apt-get install fonts-droid-fallback ttf-wqy-zenhei ttf-wqy-microhei fonts-arphic-ukai fonts-arphic-uming
 ```
+
+## Stp 6. 修改 ~/.bashrc
+
+```
+export LANG=zh_CN.UTF-8
+```
