@@ -24,7 +24,7 @@ nvidia-docker rm container_id
 ## 4 删除镜像
 
 ```
-nvidia-docker rmi image_id
+nvidia-docker rm image_id
 ```
 
 ## 5 创建新的容器
