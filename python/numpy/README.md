@@ -1,5 +1,14 @@
 # numpy
 
+## 创建一个 ndarray
+
+| API | 功能  |
+|:----| :-----|
+|[numpy.empty](create_ndarray/numpy.empty.py)| 创建一个未初始化的数组 |
+|[numpy.zeros](create_ndarray/numpy.zeros.py)| 创建一个数组，元素全为0 |
+|[numpy.ones](create_ndarray/numpy.ones.py)| 创建一个数组，元素全为1 |
+|[numpy.full](create_ndarray/numpy.full.py)| 创建一个数组，元素全为某个给定值 |
+
 ## 基础API
 
 | API | 功能  |
