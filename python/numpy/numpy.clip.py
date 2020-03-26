@@ -44,10 +44,16 @@ import numpy as np
 a = np.arange(10)
 
 b = np.clip(a, 1, 8)
-# array([1, 1, 2, 3, 4, 5, 6, 7, 8, 8])
+print('b = {}'.format(b))
 
-c = np.clip(a, 3, 6, out=a)
-# array([3, 3, 3, 3, 4, 5, 6, 6, 6, 6])
+c = np.clip(a, 3, 6, out=b)
+print('b = {}'.format(b))
+print('c = {}'.format(c))
 
 d = np.clip(a, [3, 4, 1, 1, 1, 4, 4, 4, 4, 4], 8)
-# array([3, 4, 2, 3, 4, 5, 6, 7, 8, 8])
+print('d = {}'.format(d))
+
+# b = [1 1 2 3 4 5 6 7 8 8]
+# b = [3 3 3 3 4 5 6 6 6 6]
+# c = [3 3 3 3 4 5 6 6 6 6]
+# d = [3 4 2 3 4 5 6 7 8 8]
