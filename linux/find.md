@@ -6,7 +6,7 @@ Linux find命令用来在指定目录下查找文件。任何位于参数之前�
 ## 语法
 
 ```
-find   path   -option   [   -print ]   [ -exec   -ok   command ]   {} \;
+find   path   -option   [ -print ]   [ -exec   -ok   command ]   {} \;
 ```
 
 参数说明：

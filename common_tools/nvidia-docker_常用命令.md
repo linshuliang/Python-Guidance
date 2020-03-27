@@ -44,3 +44,14 @@ nvidia-docker images
 ```
 nvidia-docker commit 容器_id 镜像_name
 ```
+
+## 8 Docker 退出容器但不关闭当前容器
+
+方法一：如果要正常退出不关闭容器，请按 Ctrl+P+Q 进行退出容器。
+
+方法二：如果使用 exit 退出，那么在退出之后会关闭容器，可以使用下面的流程进行恢复:
+
+```
+nvidia-docker restart container_name
+nvidia-docker attach container_name
+```
