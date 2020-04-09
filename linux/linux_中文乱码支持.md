@@ -20,7 +20,7 @@ zh_CN.utf8
 sudo apt-get install language-pack-zh-hans
 ```
 
-## Step 2. 修改/etc/environment
+## Step 2. 修改/etc/environment，加上下面两行
 
 ```
 LANG="zh_CN.UTF-8"
