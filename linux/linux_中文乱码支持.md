@@ -2,6 +2,18 @@
 
 目标：使系统/服务器支持中文，能够正常显示
 
+首先查看系统有没有安装中文语言包：
+
+```
+locale -a
+```
+
+看是否包含以下几项：
+
+zh_CN.gb2312
+zh_CN.gbk
+zh_CN.utf8
+
 ## Step 1. 安装中文支持包 language-pack-zh-hans
 
 ```
@@ -46,3 +58,7 @@ sudo apt-get install fonts-droid-fallback ttf-wqy-zenhei ttf-wqy-microhei fonts-
 ```
 export LANG=zh_CN.UTF-8
 ```
+
+## 参考
+
+[centos 中文语言乱码解决方法](https://blog.csdn.net/hpf247/article/details/79981803)
