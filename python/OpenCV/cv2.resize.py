@@ -4,7 +4,7 @@
 #
 # Parameters:
 #     src: source/input image.
-#     dsize: desired size for the output image.
+#     dsize: desired size for the output image. (out_width, out_height)
 #     fx (optional): scale factor along the horizontal axis.
 #     fy (optional): scale factor along the vertical axis.
 #     interpolation	(optional):
