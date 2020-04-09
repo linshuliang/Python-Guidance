@@ -16,5 +16,8 @@
 import cv2
 im_path = '../../dataset/image/cat.jpeg'
 im = cv2.imread(im_path)
-im_rs = cv2.resize(im, (512, 512), interpolation=cv2.INTER_LINEAR)
+out_width = 256
+out_height = 512
+out_size = (out_width, out_height)
+im_rs = cv2.resize(im, dsize=out_size, interpolation=cv2.INTER_LINEAR)
 cv2.imwrite('resized_image.jpeg', im_rs)
