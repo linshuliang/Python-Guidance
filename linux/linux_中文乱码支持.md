@@ -10,9 +10,14 @@ locale -a
 
 看是否包含以下几项：
 
+```
 zh_CN.gb2312
 zh_CN.gbk
 zh_CN.utf8
+```
+
+如果没有，则从 Step1 执行到 Step6，否则直接跳到 Step6.
+
 
 ## Step 1. 安装中文支持包 language-pack-zh-hans
 
@@ -57,6 +62,12 @@ sudo apt-get install fonts-droid-fallback ttf-wqy-zenhei ttf-wqy-microhei fonts-
 
 ```
 export LANG=zh_CN.UTF-8
+```
+
+然后执行：
+
+```
+source ~/.bashrc
 ```
 
 ## 参考
