@@ -1,4 +1,4 @@
-# git pull 撤销误操作
+# git pull 撤销错误操作
 
 ## Step 1. git reflog 命令查看历史变更记录：
 
