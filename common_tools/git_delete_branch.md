@@ -24,7 +24,7 @@ git branch -d BranchName
 git push origin --delete BranchName
 ```
 
-## Step 5: 查看删除后分支们
+## Step 5: 查看删除后的分支
 
 ```
 git branch -a
