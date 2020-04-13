@@ -20,9 +20,9 @@
 
 | API | 功能  |
 |:----| :-----|
-|[np.clip](math.numpy.clip.py) | 将ndarray 的值限定于[`a_min`， `a_max`] |
-|[np.sort](math.numpy.sort.py) | 数组排序 |
-|[np.floor](math.numpy.floor.py)| 数组向下取整 |
+|[np.clip](math/numpy.clip.py) | 将ndarray 的值限定于[`a_min`， `a_max`] |
+|[np.sort](math/numpy.sort.py) | 数组排序 |
+|[np.floor](math/numpy.floor.py)| 数组向下取整 |
 
 ## 基础API
 
@@ -37,10 +37,10 @@
 
 | API | 功能  |
 |:----| :-----|
-|[np.stack](shape_manipulation.numpy.stack.py) | 堆叠数组 |
-|[np.squeeze](shape_manipulation.numpy.squeeze.py) | 删除数组中维度是1的条目 |
-|[np.reshape](shape_manipulation.numpy.reshape.py) | 改变 ndarray 的形状 |
-|[np.expand\_dims](shape_manipulation.numpy.expand_dims.py) | 在不改变 ndarray 的数值下，新增维度 |
+|[np.stack](shape_manipulation/numpy.stack.py) | 堆叠数组 |
+|[np.squeeze](shape_manipulation/numpy.squeeze.py) | 删除数组中维度是1的条目 |
+|[np.reshape](shape_manipulation/numpy.reshape.py) | 改变 ndarray 的形状 |
+|[np.expand\_dims](shape_manipulation/numpy.expand_dims.py) | 在不改变 ndarray 的数值下，新增维度 |
 
 ## np.random
 
