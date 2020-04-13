@@ -1,6 +1,8 @@
 # coding=utf-8
+#
 # numpy.copy(a, order='K')
-# Return an array copy of the given object.
+#     Return an array copy of the given object.
+#
 import numpy as np
 
 arr_0 = np.arange(0, 10).reshape((2, 5))
