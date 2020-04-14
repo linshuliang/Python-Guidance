@@ -32,7 +32,6 @@ def numpy.sort(a, axis=-1, kind=None, order=None)
         Array of the same type and shape as `a`.
 
 """
-
 import numpy as np
 
 a = np.array([[[1, 4], [3, 1]], [[2, 6], [1, 2]]])

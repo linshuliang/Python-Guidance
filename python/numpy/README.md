@@ -36,11 +36,11 @@
 | API | 功能  |
 |:----| :-----|
 |[np.sort](ordering/numpy.sort.py) | 数组排序 |
-|[np.argsort](ordering/numpy.argsort.py) | |
-|[np.argmin](ordering/numpy.argmin.py) | |
-|[np.argmax](ordering/numpy.argmax.py) | |
-|[np.min](ordering/numpy.min.py) | |
-|[np.max](ordering/numpy.max.py) | |
+|[np.argsort](ordering/numpy.argsort.py) | 返回数组排序后的位置列表  |
+|[np.argmin](ordering/numpy.argmin.py) | 返回沿轴axis 的最小值的索引 |
+|[np.argmax](ordering/numpy.argmax.py) | 返回沿轴axis 的最大值的索引 |
+|[np.min](ordering/numpy.min.py) | 返回沿轴 axis 的最小值 |
+|[np.max](ordering/numpy.max.py) | 返回沿轴 axis 的最大值 |
 
 ## 改变数组的形状
 
