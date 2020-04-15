@@ -51,10 +51,10 @@ print("list2[1:5]: ", list2[1:5])
 
 | 列表运算符       |  结果              | 描述                   |
 |:---------------- | :----------------  | :--------------------- |
-| len((1, 2, 3))   | 3                  | 计算元素个数           |
-| (1, 2) + (5, 6)  | (1, 2, 5, 6)       | 连接列表               |
-| (1, 2) * 3       | (1, 2, 1, 2, 1, 3) | 复制                   |
-| 5 in (1, 2, 3)   | False              | 元素是否在列表中       |
+| len([1, 2, 3])   | 3                  | 计算元素个数           |
+| [1, 2] + [5, 6]  | [1, 2, 5, 6]       | 连接列表               |
+| [1, 2] * 3       | [1, 2, 1, 2, 1, 2] | 复制                   |
+| 5 in [1, 2, 3]   | False              | 元素是否在列表中       |
 
 ## 列表迭代
 
@@ -80,3 +80,72 @@ for element in tup1:
 | list.remove(obj)                            | 移除列表中某个值的第一个匹配项                              |
 | list.reverse()                              | 反向列表中元素                                              |
 | list.sort(cmp=None, key=None, reverse=False)| 对原列表进行排序                                            |
+
+示例：
+
+```python
+>>> a.append('c')
+>>> a
+[1, 2, 3, 'c']
+>>> a.append('5')
+>>> a
+[1, 2, 3, 'c', '5']
+>>> a.append(2)
+>>> a
+[1, 2, 3, 'c', '5', 2]
+>>> a.count(2)
+2
+>>> a.count(1)
+1
+>>> a.count('a')
+0
+>>> a.extend([8, 9])
+>>> a
+[1, 2, 3, 'c', '5', 2, 8, 9]
+>>> a.append([8, 9])
+>>> a
+[1, 2, 3, 'c', '5', 2, 8, 9, [8, 9]]
+>>> a.remove(2)
+>>> a
+[1, 3, 'c', '5', 2, 8, 9, [8, 9]]
+>>> a.pop()
+[8, 9]
+>>> a
+[1, 3, 'c', '5', 2, 8, 9]
+>>> a.pop(index=0)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: pop() takes no keyword arguments
+>>> a.pop(0)
+1
+>>> a
+[3, 'c', '5', 2, 8, 9]
+>>> a.pop(-1)
+9
+>>> a
+[3, 'c', '5', 2, 8]
+>>> a.pop(2)
+'5'
+>>> a
+[3, 'c', 2, 8]
+>>> a.insert(3)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: insert() takes exactly 2 arguments (1 given)
+>>> a.insert(3, 'orange')
+>>> a
+[3, 'c', 2, 'orange', 8]
+>>> a.reverse()
+>>> a
+[8, 'orange', 2, 'c', 3]
+>>> a.sort()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: '<' not supported between instances of 'str' and 'int'
+>>> b = [5, 2, 6]
+>>> b
+[5, 2, 6]
+>>> b.sort()
+>>> b
+[2, 5, 6]
+```
