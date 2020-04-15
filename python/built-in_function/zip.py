@@ -13,6 +13,6 @@ print('values: {}'.format(values))
 print('zip(keys, values): {}'.format(zipped))
 print('list(zip(keys, values)): {}'.format(zipped_list))
 
-# 星号* 可把 序列/集合 转为位置参数，
-# 两个星号** 可把字典 转为关键字参数
+# 一个星号* 可把 序列/集合 转为位置参数，
+# 两个星号** 可把字典转为关键字参数
 print(*zipped_list)
