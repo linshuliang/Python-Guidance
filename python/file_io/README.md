@@ -22,7 +22,7 @@ Python 标准库中，用于文件和目录访问的模块包括:
 | os.walk                  | 是一个简单易用的文件、目录遍历器.                                      |
 | os.chdir(path)           | 用于改变当前工作目录到指定的路径(path)                                 |
 | os.makedirs(path, mode)  | 用于递归创建目录，创建的所有 intermediate-level 文件夹需要包含子目录。 |
-| os.removedirs(path)      | 用于递归删除目录，如果此目录中存在子目录，则不能直接删除此目录。       |
+| os.removedirs(path)      | 用于删除目录，如果此目录中存在子目录，则不能直接删除此目录。           |
 | os.rename(src, dst)      | 重命名文件或者目录，如果 dst 已经存在，将 raise OSError。              |
 
 ## os.path 模块
