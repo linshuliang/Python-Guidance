@@ -44,14 +44,22 @@
 
 ## 改变数组的形状
 
+* split : Split array into a list of multiple sub-arrays of equal size.
+* hsplit : Split array into multiple sub-arrays horizontally (column wise)
+* vsplit : Split array into multiple sub-arrays vertically (row wise)
+* stack : Stack a sequence of arrays along a new axis.
+* hstack : Stack arrays in sequence horizontally (column wise)
+* vstack : Stack arrays in sequence vertically (row wise)
+
 | API | 功能  |
 |:----| :-----|
 |[np.squeeze](shape_manipulation/numpy.squeeze.py) | 删除数组中维度是1的条目 |
 |[np.reshape](shape_manipulation/numpy.reshape.py) | 改变 ndarray 的形状 |
 |[np.expand\_dims](shape_manipulation/numpy.expand_dims.py) | 在不改变 ndarray 的数值下，新增维度 |
 |[np.stack](shape_manipulation/numpy.stack.py) | 堆叠数组 |
-|[np.hstack](shape_manipulation/numpy.hstack.py) | 沿着水平方向将数组堆叠起来 |
-|[np.vstack](shape_manipulation/numpy.vstack.py) | 沿着竖直方向将数组堆叠起来 |
+|[np.hstack](shape_manipulation/numpy.hstack.py) | 沿着水平方向将数组堆叠起来，按列合并 |
+|[np.vstack](shape_manipulation/numpy.vstack.py) | 沿着竖直方向将数组堆叠起来，按行合并。 np.vstack((a, b)) 等同于 np.concatenate((a, b)) |
+|[np.concatenate](shape_manipulation/numpy.concatenate.py) | 沿着一条现有的轴，来连接一系列数组 |
 
 ## np.random
 

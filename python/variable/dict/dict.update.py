@@ -6,8 +6,11 @@
 #     If E is present and has a .keys() method, then does:  for k in E: D[k] = E[k]
 #     If E is present and lacks a .keys() method, then does:  for k, v in E: D[k] = v
 dict_demo = {'name': 'linda', 'gender': 'female'}
+print(dict_demo)
 
 add_dict = {'work': 'Apple', 'site': 'California'}
+print(add_dict)
+
 dict_demo.update(add_dict)
 print(dict_demo)
 # {'name': 'linda', 'gender': 'female', 'work': 'Apple', 'site': 'California'}
