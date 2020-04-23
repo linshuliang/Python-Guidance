@@ -82,19 +82,18 @@ class dict(object):
         D.values() -> an object providing a view on D's values
 ```
 
-| 方法                               | 作用                                                             |
-|:-----------------------------------| :---------------------------------------------------------       |
-| dict.keys()                        | 以列表返回一个字典所有的键                                       |  
-| dict.values()                      | 以列表返回字典中的所有值                                         |
-| dict.items()                       | 以列表返回可遍历的(键, 值) 元组                                  |
-| dict.get(key, default=None)        | 如果键在字典中，返回该键的对应值；如果键不在字典中（或者键的对应值为None），返回 default 值 |
-| dict.setdefault(key, default=None) | 如果键在字典中，返回该键的对应值；如果键不在字典中，将会添加键并将对应值设为default |
-| dict.update(dict2)                 | 把字典 dict2 的 `键/值对` 添加到 dict 里                         |
-| dict.fromkeys(seq, value)          ||
-| dict.copy()                        ||
-| dict.pop(key, default=None)        ||
-| dict.popitem()                     ||
-| dict.clear()                       ||
+| 方法                                 | 作用                                                                         |
+|:-----------------------------------  | :--------------------------------------------------------------------------- |
+| dict.keys()                          | 以列表返回一个字典所有的键                                                   |  
+| dict.values()                        | 以列表返回字典中的所有值                                                     |
+| dict.items()                         | 以列表返回可遍历的(键, 值) 元组                                              |
+| dict.get(key[, default=None])        | 如果键在字典中，返回该键的对应值；如果键不在字典中，返回 default 值          |
+| dict.setdefault(key[, default=None]) | 如果键在字典中，返回该键的对应值；如果键不在字典中，将在dict中添加键值对(key, default)，并返回default |
+| dict.update(dict2)                   | 把字典 dict2 的 `键/值对` 添加到 dict 里                                     |
+| dict.fromkeys(seq, value)            | 创建一个新字典，以序列seq 中的元素做字典的键，value 为字典所有键对应的初始值。|
+| dict.pop(key[, default])             | 删除字典给定键(key)及对应的值(value)，返回值为被删除的值。                   |
+| dict.popitem()                       | 删除字典中的最后一个键值对，返回值为(last\_key, last\_value)                 |
+| dict.clear()                         | 删除字典内所有元素，字典变为空字典，此函数没有返回值。                       |
 
 示例：
 
