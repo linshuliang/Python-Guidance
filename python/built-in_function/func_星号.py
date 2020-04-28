@@ -9,12 +9,15 @@ import os
 import numpy as np
 
 
-def handle(im_path=None, im_arr=None):
+def handle(im_path=None, im_arr=None, im_info=None):
     if im_path is not None:
         print(im_path)
 
     if im_arr is not None:
         print(im_arr)
+
+    if im_info is not None:
+        print(im_info)
 
 
 if __name__ == '__main__':
@@ -28,3 +31,6 @@ if __name__ == '__main__':
     print("两个星号`**`可把`字典`转为关键字参数:")
     dict_demo = {'im_arr': arr, 'im_path': path}
     handle(**dict_demo)
+
+    print('* 号和关键字字段混用')
+    handle(im_info='third', **dict_demo)
