@@ -9,10 +9,21 @@ zipped = zip(keys, values)
 zipped_list = list(zipped)
 
 print('keys: {}'.format(keys))
-print('values: {}'.format(values))
-print('zip(keys, values): {}'.format(zipped))
-print('list(zip(keys, values)): {}'.format(zipped_list))
+# keys: ['a', 'b', 'c']
 
-# 一个星号* 可把 序列/集合 转为位置参数，
-# 两个星号** 可把字典转为关键字参数
-print(*zipped_list)
+print('values: {}'.format(values))
+# values: [1, 2, 3]
+
+print('zip(keys, values): {}'.format(zipped))
+# zip(keys, values): <zip object at 0x10230ad48>
+
+print('list(zip(keys, values)): {}'.format(zipped_list))
+# list(zip(keys, values)): [('a', 1), ('b', 2), ('c', 3)]
+
+for k, v in zip(keys, values):
+    print(k, v)
+    """
+    a 1
+    b 2
+    c 3
+    """
