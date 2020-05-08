@@ -25,6 +25,12 @@ This means the network has not learned the relavant patterns in the training dat
 
 ### 3.1 更多的训练数据(Get more training data)
 
+When there are a small number of training examples,
+the model sometimes learns from noises or unwanted details from training examples,
+to an extent that it negatively impacts the performance of the model on new examples.
+This phenomenon is known as overfitting.
+It means that the model will have a difficult time generalizing on a new dataset.
+
 To prevent overfitting, the best solution is to use more complete training data.
 
 The data should cover the full range of inputs that the model is expected to handle.
@@ -126,7 +132,7 @@ Dropout is one of the most effective and most commonly used regularization techn
 
 ### 3.5 数据增强(data-augmentation)
 
-在原数据集的基础上，加上一些噪音或干扰项，从而增加样本数量。
-比如图像处理中，改变亮度、对比度、翻转等处理。
+Data augmentation takes the approach of generating more training data from existing training samples,
+by augmenting the samples using random transformations that yield believable-looking images.
 
 ### 3.6 batch normalization

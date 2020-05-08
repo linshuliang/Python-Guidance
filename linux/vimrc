@@ -1,0 +1,21 @@
+set nocompatible
+
+" Tab 大小
+set ts=4
+set expandtab
+
+" 缩进大小
+set shiftwidth=4
+
+if has("syntax")
+    syntax on
+endif
+
+" 高亮显示匹配的括号"
+set showmatch
+
+" 匹配括号高亮的时间"
+set matchtime=1
+
+" 搜索设置高亮"
+set hlsearch
