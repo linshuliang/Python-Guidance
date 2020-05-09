@@ -4,6 +4,12 @@
 
 ## 过拟合（overfit）
 
+When there are a small number of training examples,
+the model sometimes learns from noises or unwanted details from training examples,
+to an extent that it negatively impacts the performance of the model on new examples.
+This phenomenon is known as overfitting.
+It means that the model will have a difficult time generalizing on a new dataset.
+
 Although it's often possible to achieve high accuracy on the trainint set,
 what we really want is to develop models that generalized well to a testing set
 (or data that have not been seen yet).
@@ -24,12 +30,6 @@ This means the network has not learned the relavant patterns in the training dat
 ## 防止过拟合的方法
 
 ### 3.1 更多的训练数据(Get more training data)
-
-When there are a small number of training examples,
-the model sometimes learns from noises or unwanted details from training examples,
-to an extent that it negatively impacts the performance of the model on new examples.
-This phenomenon is known as overfitting.
-It means that the model will have a difficult time generalizing on a new dataset.
 
 To prevent overfitting, the best solution is to use more complete training data.
 
