@@ -19,7 +19,7 @@
 | 方法                | 用法说明         |
 | :-----------        | :-----------     |
 | put	              | 放数据，Queue.put( )默认有block=True和timeout两个参数。当block=True时，写入是阻塞式的，阻塞时间由timeout确定。当队列q被（其他线程）写满后，这段代码就会阻塞，直至其他线程取走数据。Queue.put（）方法加上 block=False 的参数，即可解决这个隐蔽的问题。但要注意，非阻塞方式写队列，当队列满时会抛出 exception Queue.Full 的异常 |
-| get	              | 取数据(默认阻塞),Queue.get([block[, timeout]])获取队列，timeout等待时间 |
+| get	              | 取数据(默认阻塞), Queue.get([block[, timeout]])获取队列，timeout等待时间 |
 | empty	              | 如果队列为空，返回True，反之False |
 | qsize	              | 显示队列中真实存在的元素长度 |
 | maxsize	          | 最大支持的队列长度,使用时无括号 |
