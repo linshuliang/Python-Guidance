@@ -19,3 +19,10 @@ set matchtime=1
 
 " 搜索设置高亮"
 set hlsearch
+
+" 设置vim配色
+" (1) 在 github 搜 molokai
+" (2)创建文件夹~/.vim/colors
+" (3) 在里面添加 molokai.vim
+colorscheme molokai
+
