@@ -5,7 +5,10 @@
 # 安装 opencv
 
 ```shell
+brew install pkg-config
 brew install opencv
+pkg-config --cflags --libs /usr/local/Cellar/opencv/4.3.0_4/lib/pkgconfig/opencv4.pc
+pkg-config --cflags --libs opencv4
 ```
 
 
@@ -16,7 +19,11 @@ brew install opencv
 #include <opencv2/opencv.hpp>
 ```
 
+编译选项:
 
+```shell
+g++ $(pkg-config --cflags --libs opencv4) *.cpp
+```
 
 ## bug 解决
 
