@@ -18,8 +18,8 @@ find 根据下列规则判断 path 和 expression，在命令列上第一个 `-`
 
 ## 示例
 
-### 删除指定文件夹(dir) 中所有名为 filename 的文件/子目录
+### 删除指定文件夹(`dir`) 中所有名为 filename 的文件/子目录
 
-```
+```shell
 find dir -name filename |xargs rm -rf
 ```
