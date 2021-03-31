@@ -2,7 +2,7 @@
 
 ## 1 切片
 
-取一个`list`或`tuple`的部分元素是非常常见的操作。
+取一个`list`或`tuple`的部分元素是极常见的操作。
 
 `L[start, end]` 表示：从索引`start`开始取，直到索引`end`为止，但不包括索引`end`。
 
@@ -14,18 +14,26 @@
 
 ### 1.2 间隔取值
 
-* `L[start:end:interval]`：默认间隔`interval`为1，亦可设成其他数。
+`L[start:end:interval]`：默认间隔`interval`为1，我们可设成其他数。
+
+例子：
+
+* `L[::2]` : 取间隔1个的元素
+* `L[1:5:3]` : 取 `L[1], L[4]`
+* `L[:30:10]` : 取 `L[0], L[10], L[20]`
 
 ## 2 迭代
 
 在Python中，迭代是通过`for ... in`语句来完成的。
 
-Python的`for ... in`循环不仅可以用在所有的可迭代对象上，包括：
+Python的`for ... in`循环可以用在所有的可迭代对象上，包括：
 
 * `list`
 * `tuple`
+* `set`
 * `str`
 * `dict`
+* 生成器（generator）
 * 其他可迭代对象
 
 ### 2.1 迭代 dict
@@ -63,6 +71,10 @@ for i, value in enumerate(list_0):
 ```
 
 ## 生成器
+
+在Python中，一边循环一边计算的机制，称为生成器(generator)。
+
+
 
 
 

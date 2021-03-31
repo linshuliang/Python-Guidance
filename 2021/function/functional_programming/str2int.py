@@ -16,12 +16,8 @@ DIGITS = {
 }
 
 
-def char2num(s: str) -> int:
-    return DIGITS[s]
-
-
 def str2int(s: str) -> int:
-    num = reduce(lambda x, y: x * 10 + y, map(char2num, s), 0)
+    num = reduce(lambda x, y: x * 10 + y, map(lambda c: DIGITS[c], s), 0)
     return num
 
 
