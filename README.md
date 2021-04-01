@@ -19,3 +19,4 @@
 
 * [pre-commit 主页](https://pre-commit.com/)
 * [廖雪峰Python 教程 GitHub 源码](https://github.com/michaelliao/learn-python3)
+* [极客学院 Python教程](https://wiki.jikexueyuan.com/list/python/)
