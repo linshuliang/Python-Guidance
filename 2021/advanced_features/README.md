@@ -42,6 +42,7 @@
 * 如果要同时迭代`key`和`value`，用`for k, v in d.items()`
 
 **dict 迭代 Demo**:
+
 ```python
 d = {'a': 1, 'b': 2, 'c': 3}
 
@@ -175,7 +176,7 @@ if __name__ == "__main__":
 
 ### 4.1 生成器的构造方法
 
-**(1) 生成器表达式**
+#### (1) 生成器表达式
 
 生成器表达式与列表推导式的定义方式相同，唯一的区别：
 
@@ -189,7 +190,7 @@ for num in numbers:
     print(num)
 ```
 
-**(2) 生成器函数**
+#### (2) 生成器函数
 
 含有 `yield` 关键字的函数，调用该函数时会返回一个生成器。
 
@@ -198,9 +199,9 @@ for num in numbers:
 带有`yield`的函数执行过程：
 
 * 调用该函数的时候不会立即执行代码，而是返回了一个生成器对象；
-* 当`next()` 作用于返回的生成器对象时，函数开始执行，在遇到 `yield` 的时候会『暂停』，并返回当前的迭代值；补充两点说明：
-    * 在 `for ... in` 循环中会自动调用 `next()`；
-    * 暂停时，会保留中断的位置和所有的变量值，也就是执行时的**上下文环境**被保留起来；
+* 当`next()` 作用于返回的生成器对象时，函数开始执行，在遇到 `yield` 的时候会『暂停』，并返回当前的迭代值。补充两点说明：
+  * 在 `for ... in` 循环中会自动调用 `next()`；
+  * 暂停时，会保留中断的位置和所有的变量值，也就是执行时的**上下文环境**被保留起来；
 * 当再次使用`next()`的时候，函数会从原来『暂停』的地方继续执行，直到遇到 `yield`语句，如果没有`yield`语句，则抛出异常(`raise StopIteration`)；
 
 简而言之，调用`yield`函数会返回生成器对象，`next()`使函数执行，`yield`使函数暂停。
@@ -224,8 +225,69 @@ if __name__ == "__main__":
 
 处理大文件时，可使用生成器，详细参考[大文件分段处理](./big_file_rw/README.md)
 
+## 5 上下文管理器 (Context Manager)
+
+> 上下文管理器协议，是指要实现对象的 `__enter__()` 和 `__exit__()` 方法。
+
+上下文管理器也就是支持上下文管理器协议的对象，也就是包含了`__enter__()` 和 `__exit__()` 实现方法的类的对象。
+
+* `__enter__()` 方法返回对象本身
+* `__exit__()` 方法负责清理工作：例如释放资源、关闭文件等。
+
+### 5.1 自定义上下文管理器
+
+```python
+# coding=utf-8
+from math import sqrt, pow
+
+class Point(object):
+    """
+    class Point 属于上下文管理器
+    """
+    def __init__(self, x, y):
+        print("Initializing")
+        self.x, self.y = x, y
+
+    def __enter__(self):
+        print("Entering Context")
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        print("Exiting Context")
+        return False
+
+    def get_distance(self):
+        d = sqrt(pow(self.x, 2) + pow(self.y, 2))
+        return d
+
+
+if __name__ == "__main__":
+    with Point(3, 4) as pt:
+        print("Distance = ", pt.get_distance())
+```
+
+输出为：
+
+```shell
+Initializing
+Entering Context
+('Distance = ', 5.0)
+Exiting Context
+```
+
+上面的 `with` 语句的执行过程为：
+
+* `Point(3, 4)` 产生了一个上下文管理器对象；
+* 调用 `__enter__()` 方法，并将`__enter__()`方法等返回值赋给了`as`子句中的变量`pt`;
+* 不管执行过程中是否发生异常，都执行上下文管理器中的`__exit__()` 方法。`__exit__()`方法负责执行清理工作，例如释放资源，关闭文件等。
+  * 如果执行过程中出现异常，或者执行了`break/continue/return`，则以`None`作为参数调用`__exit__(None, None, None)`；
+  * 如果执行过程中出现了异常，则以`sys.exc_info`得到等异常信息作为参数调用 `__exit__(exc_type, exc_value, exc_traceback)`；
+    * 出现异常时，如果`__exit__(exc_type, exc_value, exc_traceback)` 返回 `False` 或者 `None`，则重新抛出异常，让`with`外的语句来处理异常。
+    * 如果 `__exit__` 的返回值为 `True`，则忽略异常，不再对异常进行处理。
+
 ## 参考
 
 * [Python 切片](https://www.liaoxuefeng.com/wiki/1016959663602400/1017269965565856)
 * [Python 迭代](https://www.liaoxuefeng.com/wiki/1016959663602400/1017316949097888)
 * [极客学院 Python 生成器](https://wiki.jikexueyuan.com/project/explore-python/Advanced-Features/generator.html)
+* [极客学院 Python 上下文管理器](https://wiki.jikexueyuan.com/project/explore-python/Advanced-Features/context.html)
