@@ -223,7 +223,7 @@ if __name__ == "__main__":
         print(item)
 ```
 
-处理大文件时，可使用生成器，详细参考[大文件分段处理](./big_file_rw/README.md)
+处理大文件时，可使用生成器，详细参考[大文件分段处理](./big_file_rw/read_file_chunk.py)
 
 ## 5 上下文管理器 (Context Manager)
 
@@ -278,7 +278,7 @@ Exiting Context
 上面的 `with` 语句的执行过程为：
 
 * `Point(3, 4)` 产生了一个上下文管理器对象；
-* 调用 `__enter__()` 方法，并将`__enter__()`方法等返回值赋给了`as`子句中的变量`pt`;
+* 调用 `__enter__()` 方法，并将`__enter__()`方法的返回值赋给了`as`子句中的变量`pt`;
 * 不管执行过程中是否发生异常，都执行上下文管理器中的`__exit__()` 方法。`__exit__()`方法负责执行清理工作，例如释放资源，关闭文件等。
   * 如果执行过程中出现异常，或者执行了`break/continue/return`，则以`None`作为参数调用`__exit__(None, None, None)`；
   * 如果执行过程中出现了异常，则以`sys.exc_info`得到等异常信息作为参数调用 `__exit__(exc_type, exc_value, exc_traceback)`；
