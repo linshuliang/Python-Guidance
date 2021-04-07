@@ -158,7 +158,7 @@ def count_right():
 
 ### 4.1 装饰器简介
 
-> 可以动态修改函数（类）功能的函数就是装饰器。本质上，它是一个高阶函数，以被装饰的函数为参数，并返回一个包装后的函数给被装饰函数。
+> 可以动态修改函数功能的**闭包**就是装饰器。本质上，它是一个高阶函数，以被装饰的函数为参数，并返回一个包装后的函数给被装饰函数。
 
 先看一个例子，如何给字符串加上 HTML 标签 ：
 
@@ -178,7 +178,7 @@ if __name__ == "__main__":
     print(hello())
     # <i>hello world</i>
     print(hello.__name__)
-    # wrappe
+    # wrapped
 ```
 
 `makeitalic` 就是一个装饰器（decorator），它『装饰』了函数 `hello`，并返回一个函数`wrapped`，将其赋给`hello`。
@@ -196,3 +196,178 @@ def makeitalic(func):
 def hello():
     return "hello world
 ```
+
+### 4.2 装饰器的使用形式
+
+* 装饰器的一般使用形式
+
+    ```python
+    @decorator_name
+    def func():
+        do_something
+    ```
+
+    等价于：
+
+    ```python
+    def func():
+        do_something
+
+    func = decorator_name(func)
+    ```
+
+* 装饰器可以定义多个，离函数定义最近的装饰器先被调用
+
+    ```python
+    @decorator_one
+    @decorator_two
+    def func():
+        do_something
+    ```
+
+    等价于:
+
+    ```python
+    def func():
+        do_something
+
+    func = decorator_one(decorator_two(func))
+    ```
+
+* 装饰器可以带参数
+
+    ```python
+    @decorator(arg1, arg2)
+    def func():
+        do_something
+
+    func = decorator(arg1, arg2)(func)
+    ```
+
+### 4.3 对带参数的函数进行装饰
+
+内嵌函数的参数应该和被装饰函数的参数相对应，使用`(*args, **kwargs)` 适应可变参数。
+
+例如：
+
+```python
+def makeitalic(func):
+    def wrapped(*args, **kwargs):
+        ret = func(*args, **kwargs)
+        return '<i>' + ret + '</i>'
+    return wrapped
+
+
+@makeitalic
+def hello(name):
+    return "hello %s" % name
+
+
+@makeitalic
+def hello2(name1, name2):
+    return "hello %s, %s" % (name1, name2)
+
+
+if __name__ == "__main__":
+    print(hello("plt"))
+    print(hello2("lsl", "plt")
+```
+
+### 4.4 带参数的装饰器
+
+上面的例子，我们增强了函数 hello 的功能，给它的返回加上了标签 `<i>...</i>`，现在，我们想改用标签 `<b>...</b>` 或 `<p>...</p>`。是不是要像前面一样，再定义一个类似 `makeitalic` 的装饰器呢？其实，我们可以定义一个函数，将标签作为参数，返回一个装饰器，比如：
+
+```python
+def wrap_in_tag(tag):
+    def decorator(func):
+        def wrapped(*args, **kwargs):
+            ret = func(*args, **kwargs)
+            return '<' + tag + '>' + ret + '</' + tag + '>'
+        return wrapped
+    return decorator
+
+
+@wrap_in_tag('b')
+def hello(name):
+    return "hello %s" % name
+
+
+@wrap_in_tag('p')
+def hello2(name1, name2):
+    return "hello %s, %s" % (name1, name2)
+```
+
+> 带参数的装饰器，就是在装饰器外面再加一层函数，最外层函数的参数为装饰器的参数。根据不同的参数返回不同的装饰器。
+
+### 4.4 装饰器的副作用 - 改变了被装饰函数的 `__name__`
+
+为了不改变被装饰函数的`__name__`，Python 的 `functools` 包提供了一个 `wraps` 的装饰器：
+
+```python
+from functools import wraps
+
+
+def makeitalic(func):
+    @wraps(func)
+    def wrapped():
+        return '<i>' + func() + '</i>'
+
+    return wrapped
+
+
+@makeitalic
+def hello():
+    return "hello world"
+
+
+if __name__ == "__main__":
+    print(hello())         # <i>hello world</i>
+    print(hello.__name__)  # hello
+```
+
+> 注意：@wraps 后一定要包含参数（函数对象）
+
+### 4.5 Python 装饰器小结
+
+在面向对象（OOP）设计模式中，decorator 被称为装饰模式，Python 直接从语法层次支持 decorator。
+
+* 本质上，装饰器就是一个返回函数的高阶函数；
+* 装饰器可以动态地修改一个函数的功能，通过在原有的函数/类上包裹一层修饰函数来实现；
+* 装饰器是闭包的一种应用，但它有特殊要求：参数为被装饰函数，并返回一个函数。
+
+## 5 `partial` 函数
+
+Python 提供了一个 `functools` 模块，该模块为高阶函数提供支持。
+
+`functools`模块中的`partial`函数功能是：固定函数的某些参数，返回一个新的函数。
+
+```python
+functools.partial(func [, *args] [, **kwargs])
+```
+
+例如：
+
+```python
+from functools import partial
+
+
+def multiply(x, y):
+    return x * y
+
+
+def subtract(x, y):
+    return x - y
+
+
+if __name__ == "__main__":
+    double = partial(multiply, y=2)
+    print(double(3))    # 等价于 multiply(3, 2)
+    print(double(100))  # 等价于 multiply(100, 2)
+
+    subtractByTen = partial(subtract, 10)
+    print(subtractByTen(3))  # 等价于 subtract(10, 3)
+    print(subtractByTen(30)) # 等价于 subtract(10, 30)
+```
+
+总结：`functools`模块中的`partial`函数，可以固定某些参数，并返回一个新的函数。
+当函数参数太多，并需要固定某些参数时，就可以使用`functools.partial`创建一个新的函数。
