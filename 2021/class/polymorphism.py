@@ -19,7 +19,7 @@ class Cat(Animal):
         print('MiaoMiao.., I am %s' % self.name)
 
 
-def hello(animal):
+def hello(animal: Animal):
     animal.greet()
 
 

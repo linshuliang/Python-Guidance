@@ -29,21 +29,20 @@ class Animal(object):
     def greet(self):
         print("Hello, I am %s." % self.name)
 
-
 if __name__ == "__main__":
     ani = Animal("dog")
     ani.greet()
 ```
 
 * `__init__` 方法即为类的构造函数，创建实例时，需要传入与之匹配的参数；
-* 类中的函数，第一个参数为 `self`，指向实例本身；
+* 类中的实例函数，第一个参数为 `self`，指向实例本身；
 * 如果一个类不继承其他类，就显式地从`object`继承：
   * 所有类最终都会继承自`object`类；
   * 即使一个类不继承其他类，也要显式地从`object`继承，这样做可自动定义一些特殊的方法，这些方法实现了对象的默认语义；
 
 ### 1.2 访问限制
 
-* 如果要让内部属性不被外部访问，可以把属性的名称前加上两个下划线`__`，这样就变成了一个私有变量，只有内部可以访问，外部不能访问；
+* 如果要让内部属性不被外部访问，可以在属性的名称前加上两个下划线`__`，这样就变成了一个私有变量，只有内部可以访问，外部不能访问；
 * 如果变量名前面只有一个下划线`_`，表示不要随意访问这个变量，虽然它可以直接被访问；
 * 在 Python 中，以双下划线开头，并且以双下划线结尾的变量是特殊变量，例如`__name__`，特殊变量是可以直接访问的。所以，不要自定义 `__xxx__`这样的变量名；
 
@@ -109,7 +108,7 @@ class Cat(Animal):
     def greet(self):
         print('MiaoMiao.., I am %s' % self.name)
 
-def hello(animal):
+def hello(animal : Animal):
     animal.greet()
 
 if __name__ == "__main__":
@@ -138,3 +137,91 @@ if __name__ == "__main__":
     hello(d)  # WangWang.., I am haba.
     hello(c)  # MiaoMiao.., I am kitty
 ```
+
+### 1.4 类方法和静态方法
+
+#### 1.4.1 类方法
+
+Python 类方法和实例方法相似，它最少也要包含一个参数：
+
+* 实例方法的第一个参数为 `self`；
+* 类方法的第一个参数为 `cls`；
+
+类方法和实例方法的不同还有：
+
+* 类方法需要使用`@classmethod`修饰符进行修饰；
+* 类方法既可直接通过类来调用，也可通过使用实例来调用。实例方法必须通过实例来调用；
+
+```python
+# 类方法
+class CMethodDemo:
+    def __init__(self):
+        self._name = "python"
+        self._company = "oppo"
+
+    @classmethod
+    def info(cls):
+        print("调用类方法 info.cls", cls)
+
+
+if __name__ == "__main__":
+    # 1 可直接通过类来调用类方法
+    CMethodDemo.info()
+    # 2 可使用实例来调用类方法
+    c1 = CMethodDemo()
+    c1.info()
+```
+
+#### 1.4.2 类方法(classmethod)的作用
+
+* 当需要实现一些方法，其仅与类交互，而不需要和实例交互，那么`classmethod`有利于代码当维护；
+
+    ```python
+    class Info(object):
+        object_num = 0
+        def __init__(self):
+            Info.object_num += 1
+
+        @classmethod
+        def get_intance_num(cls):
+            return cls.object_num
+
+
+    if __name__ == "__main__":
+        i1 = Info()
+        i2 = Info()
+        print(Info.get_intance_num()  # 2
+    ```
+
+* `classmethod` 可作为工厂方法（`factory method`）提供额外的构造实例的途径；
+* `classmethod` 可作为工厂类的借口，用来读取或者修改工厂类本身；
+
+#### 1.4.3 静态方法
+
+在类中有一些方法跟类有关系，但是又不会改变类和实例状态的方法，这种方法是**静态方法**。
+
+静态方法，其实就是函数，和函数唯一的区别是，静态方法定义在**类命名空间**中，而函数定义在程序所在的空间（**全局命名空间**）中。
+
+静态方法没有类似 `self`、`cls` 这样的特殊参数，因此 Python 解释器不会对它包含的参数做任何类或对象的绑定。也正因为如此，**类的静态方法，只能调用类的静态成员/静态方法，而无法调用类的非静态属性和非静态方法**。
+
+> 静态方法使用 @staticmethod 装饰器，它是跟类有关系但在运行时又不需要实例和类参与的方法。可以使用类和实例来调用静态方法。
+
+```python
+class A(object):
+    bar = 1
+    @staticmethod
+    def static_foo():
+        print("A.bar = %d" % A.bar)
+
+
+if __name__ == "__main__":
+    # 1 可通过类直接调用静态方法
+    A.static_foo()
+    # 2 可通过实例调用静态方法
+    a = A()
+    a.static_foo()
+```
+
+## 参考
+
+* [知乎 - Python 中的 classmethod 和 staticmethod 有什么具体用途？](https://www.zhihu.com/question/20021164)
