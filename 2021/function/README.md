@@ -1,4 +1,10 @@
-# 函数式编程
+# Python 函数
+
+* [Python 函数基础](./function_basis/README.md)
+* [Python 装饰器](./decorator/)
+* [Python 偏函数](./partial/multiply_partial.py)
+
+## 函数式编程
 
 ## 1 简介
 

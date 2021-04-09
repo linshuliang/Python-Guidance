@@ -76,7 +76,7 @@ for i, value in enumerate(list_0):
 
 迭代器是指遵循迭代器协议（iterator protocol）的对象。从这句话我们可以知道，迭代器是一个对象，但比较特别，它需要遵循迭代器协议，那什么是迭代器协议呢？
 
-> 迭代器协议（iterator protocol）是指要实现对象的`__iter()__`和 `__next__()`，其中，`__iter()__`方法返回迭代器对象本身，`__next__()` 方法返回容器的下一个元素，在没有后续元素时抛出 `StopIteration` 异常。
+> 迭代器协议（iterator protocol）是指要实现对象的`__iter__()`和 `__next__()`，其中，`__iter__()`方法返回迭代器对象本身，`__next__()` 方法返回容器的下一个元素，在没有后续元素时抛出 `StopIteration` 异常。
 
 #### 3.1.1 集合数据类型
 
