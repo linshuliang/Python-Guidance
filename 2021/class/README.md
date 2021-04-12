@@ -369,7 +369,7 @@ if __name__ == "__main__":
     print(e2.get_score()
 ```
 
-为了避免直接对属性`_score`操作，类`Exam`中定义了`get_score`和`set_score`方法，这样起到了封装对作用，把一些不想对外公开的属性隐蔽起来，只是提供方法给用户操作。
+为了避免直接对属性`_score`操作，类`Exam`中定义了`get_score`和`set_score`方法，这样起到了封装的作用，把一些不想对外公开的属性隐蔽起来，只是提供方法给用户操作。
 
 * 用于设置属性值的方法，称为 `setter`；
 * 用于获取属性值的方法，称为 `getter`；
@@ -413,9 +413,32 @@ if __name__ == "__main__":
 总结：
 
 * `@property` 可将一个 `getter` 方法变为属性；
-* 如果只定义了`@property`，而没有定义相应`setter`方法，那么这就是一个只读属性；
+* 如果只定义了`@property`，而没有定义相应的`setter`方法，那么这就是一个只读属性；
 * 如果既定义了`@property`，又定义了相应的`setter`方法，那么这就是一个可读写属性；
+
+### 2.3 `super` 详解
+
+在类的继承中，如果派生类重定义了某个方法，该方法会覆盖基类的同名方法。如果想调用基类的方法，可通过 `super` 来实现。
+
+```python
+class Animal(object):
+    def __init__(self, name):
+        self._name = name
+
+    def greet(self):
+        print("Hello, i am %s." % self._name)
+
+class Dog(Animal):
+    def greet(self):
+        super().greet()
+        print("Wang")
+
+if __name__ == "__main__":
+    d = Dog("haba")
+    d.greet()
+```
 
 ## 参考
 
 * [知乎 - Python 中的 classmethod 和 staticmethod 有什么具体用途？](https://www.zhihu.com/question/20021164)
+* [Runoob - Python super 详解](https://www.runoob.com/w3cnote/python-super-detail-intro.html)
