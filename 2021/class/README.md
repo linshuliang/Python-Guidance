@@ -174,7 +174,7 @@ if __name__ == "__main__":
 
 #### 1.4.2 类方法(classmethod)的作用
 
-* 当需要实现一些方法，其仅与类交互，而不需要和实例交互，那么`classmethod`有利于代码当维护；
+* 当需要实现一些方法，其仅与类交互，而不需要和实例交互，那么`classmethod`有利于代码的维护；
 
     ```python
     class Info(object):
@@ -221,6 +221,200 @@ if __name__ == "__main__":
     a = A()
     a.static_foo()
 ```
+
+### 1.5 获取对象信息
+
+* `type()` 函数可用于判断对象类型；
+
+    ```python
+    >>> type(123)
+    <class 'int'>
+    >>> type('abc')
+    <class 'str'>
+    >>> type(None)
+    <class 'NoneType'>
+    >>> type(abs)
+    <class 'builtin_function_or_method'>
+    ```
+
+* `isinstance(data, data_type)` 函数可用于判断数据的类型，其中第一个参数`data`为数据，第二个参数为数据的类型。
+
+    ```python
+    >>> isinstance(1, int)
+    True
+    >>> isinstance('abc', str)
+    True
+    ```
+
+* 如果要获得对象的所有属性和方法，可使用 `dir()` 函数。
+
+## 2 面向对象高级编程
+
+### 2.1 `__slots__` 函数
+
+Python 是动态语言:
+
+* 当定义了`class`后，可以给该实例绑定属性和方法。
+* 当创建了`class`的实例后，还可以给该实例绑定属性和方法。
+
+```python
+# coding=utf-8
+# 给实例绑定属性和方法
+from types import MethodType
+
+class Student(object):
+    pass
+
+def set_age(self, age):
+    self.age = age
+
+if __name__ == "__main__":
+    s = Student()
+    # 给实例绑定属性
+    s.name = "Michael"
+    print(s.name)
+    # 给实例绑定方法
+    s.set_age = MethodType(set_age, s)
+    s.set_age(25)
+    print(s.age)
+```
+
+> 给一个实例绑定属性和方法，对其他实例是不起作用的。
+
+```python
+# coding=utf-8
+from types import MethodType
+
+class Student:
+    pass
+
+def set_score(self, s):
+    self.score = s
+
+# 给class添加方法
+Student.set_score = set_score
+
+if __name__ == "__main__":
+    s1 = Student()
+    s2 = Student()
+
+    s1.set_score(75)
+    s2.set_score(82)
+
+    print(s1.score)
+    print(s2.score)
+```
+
+> 给类`class`绑定属性/方法，所有的实例均可调用。
+
+#### 2.1.1 使用 `__slots__`
+
+为了达到限制的目的，Python 允许在定义`class`的时候，定义一个特殊的 `__slots__` 变量，来限制该`class`能添加的属性。
+
+```python
+# coding=utf-8
+
+class Student(object):
+    __slots__ = ('name', 'age')  # 用tuple定义允许绑定的属性名称
+
+class GraduateStudent(Student):
+    pass
+
+s = Student()  # 创建新的实例
+s.name = 'Michael'  # 绑定属性'name'
+s.age = 25  # 绑定属性'age'
+
+try:
+    s.score = 99
+except AttributeError as e:
+    print('AttributeError:', e)  
+    # AttributeError: 'Student' object has no attribute 'score'
+
+g = GraduateStudent()
+g.score = 99
+print('g.score =', g.score)
+```
+
+### 2.2 使用 `@property` 方法
+
+> `@property` 广泛应用在类的定义中，可以让调用者写出简短的代码，同时保证对参数进行必要的检查，这样，程序运行时就减少了出错的可能性。
+
+先看一个例子：
+
+```python
+class Exam(object):
+    def __init__(self, score=0):
+        self._score = score
+
+    def get_score(self):
+        return self._score
+
+    def set_score(self, val):
+        if not isinstance(val, int):
+            raise ValueError("score must be an integer")
+
+        if val < 0:
+            self._score = 0
+        elif val > 100:
+            self._score = 100
+        else:
+            self._score = val
+
+if __name__ == "__main__":
+    e1 = Exam(50)
+    print(e1.get_score())
+
+    e2 = Exam()
+    e2.set_score(80)
+    print(e2.get_score()
+```
+
+为了避免直接对属性`_score`操作，类`Exam`中定义了`get_score`和`set_score`方法，这样起到了封装对作用，把一些不想对外公开的属性隐蔽起来，只是提供方法给用户操作。
+
+* 用于设置属性值的方法，称为 `setter`；
+* 用于获取属性值的方法，称为 `getter`；
+
+> Python 内置的 `@property` 装饰器，可将一个`getter`方法变成属性。
+
+```python
+class Student(object):
+    def __init__(self, name):
+        self._name = name
+
+    @property
+    def score(self):
+        return self._score
+
+    @score.setter
+    def score(self, val):
+        if not isinstance(val, int):
+            raise ValueError("score must be an integer")
+
+        if val < 0:
+            self._score = 0
+        elif val > 100:
+            self._score = 100
+        else:
+            self._score = val
+
+    @property
+    def name(self):
+        return self._name
+
+if __name__ == "__main__":
+    s1 = Student("plt")
+    # s1.name = "zhu"  #  AttributeError: can't set attribute
+    print(s1.name)
+
+    s1.score = 99    # 调用 score.setter()，设置
+    print(s1.score)  # 调用 @property score，获取
+```
+
+总结：
+
+* `@property` 可将一个 `getter` 方法变为属性；
+* 如果只定义了`@property`，而没有定义相应`setter`方法，那么这就是一个只读属性；
+* 如果既定义了`@property`，又定义了相应的`setter`方法，那么这就是一个可读写属性；
 
 ## 参考
 
