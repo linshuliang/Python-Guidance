@@ -335,6 +335,8 @@ g.score = 99
 print('g.score =', g.score)
 ```
 
+> `__slots__` 只能对当前类起效, 对派生类不起效(除非在派生类中也定义`__slots__`)。这样，派生类允许定义的属性就是自身的`__slots__`加上基类的`__slots__`。
+
 ### 2.2 使用 `@property` 方法
 
 > `@property` 广泛应用在类的定义中，可以让调用者写出简短的代码，同时保证对参数进行必要的检查，这样，程序运行时就减少了出错的可能性。
@@ -369,7 +371,7 @@ if __name__ == "__main__":
     print(e2.get_score()
 ```
 
-为了避免直接对属性`_score`操作，类`Exam`中定义了`get_score`和`set_score`方法，这样起到了封装的作用，把一些不想对外公开的属性隐蔽起来，只是提供方法给用户操作。
+为了避免直接对属性`_score`操作，类`Exam`中定义了`get_score`和`set_score`方法，这样起到了封装的作用，把一些不想对外公开的属性隐蔽起来，只提供方法给用户操作。
 
 * 用于设置属性值的方法，称为 `setter`；
 * 用于获取属性值的方法，称为 `getter`；
@@ -418,7 +420,7 @@ if __name__ == "__main__":
 
 ### 2.3 `super` 详解
 
-在类的继承中，如果派生类重定义了某个方法，该方法会覆盖基类的同名方法。如果想调用基类的方法，可通过 `super` 来实现。
+在类的继承中，如果派生类重定义了某个方法，该方法会覆盖基类的同名方法。如果想调用基类的方法，可通过 `super` 来实现。
 
 ```python
 class Animal(object):
@@ -438,7 +440,113 @@ if __name__ == "__main__":
     d.greet()
 ```
 
+## 3 定制类和魔法方法
+
+在 Python 中，我们经常可以看到以双下划线`__`包裹起来的方法，比如 `__init__`，这些方法被称为魔法方法(`magic method`)。
+
+这些方法给 Python 类提供特殊功能，方便我们定制一个类。比如 `__init__` 方法可以对实例属性进行初始化。
+
+* [__str__(self)](./magic_methods/str_demo.py)  : 在执行`str()`时运行，常用于`print`显示类对象的信息
+* [__repr__(self)](./magic_methods/str_demo.py) : 输出和打印显示的内容，可以用 `__repr__ = __str__` 解决。
+* `__iter__(self)` ：定义了 `__iter__` 方法的类的实例都是可迭代的，该方法返回一个可迭代对象。
+* `__setitem__(self,key,val)` : 调用 `obj[key] = val` 等同于 `obj.__setitem__(key, val)`，设置键-值。
+* `__getitem__(self, key)` : 调用 `obj[key]` 等同于 `obj.__getitem__(key)`，取键`key`的对应值。
+* `__delitem__(self, key)` : 调用 `del obj[key]` 等同于 `del obj[key]`，删除键-值对。
+* `__call__(self)` : 可调用的类，实例可像函数那样调用。
+
+### 3.1 `__iter__` 方法
+
+定义了 `__iter__()`方法的类的实例都是可迭代的，可用于`for ... in`循环。
+
+> `__iter__()` 方法返回一个可迭代对象。
+
+```python
+class Fib(object):
+    def __init__(self, maxLimit=100):
+        self._a, self._b = 0, 1
+        self._maxLimit = maxLimit
+
+    def __iter__(self):
+        """
+        该方法返回一个迭代对象
+        """
+        return self  # 实例本身就是迭代对象
+
+    def __next__(self):
+        self._a, self._b = self._b, self._a + self._b
+        if self._a > self._maxLimit:
+            raise StopIteration()
+        return self._a
+
+if __name__ == "__main__":
+    for n in Fib(10):
+        print(n)
+```
+
+### 3.2 `__getitem__`
+
+如果类中定义了 `__getitem__`方法，那么就可以使用`obj[n]`这种方式对实例对象进行取值。
+
+```python
+class Data(object):
+    def __init__(self, id, addr):
+        self._id = id
+        self._addr = addr
+        self._d = {"id" : self._id, "addr" : self._addr}
+
+    def __setitem__(self, key, val):
+        self._d[key] = val
+
+    def __getitem__(self, key):
+        if key in self._d.keys():
+            return self._d[key]
+        else:
+            raise KeyError("KeyError: %s Not Exist" % key)  
+
+    def __delitem__(self, key):
+        if key in self._d.keys():
+            print("delete key : %s" % key)
+            del self._d[key]
+
+
+if __name__ == "__main__":
+    d = Data("1", "192.168.1.1")
+    d["port"] = 8088
+
+    print(d["id"])
+    print(d["addr"])
+    print(d["port"])
+
+    del d["port"]
+
+    try:
+        print(d["country"])
+    except KeyError as e:
+        print(e)
+```
+
+如果要使用切片功能，就要判断 `var` 是否为 `slice` 对象 : `isinstance(var, slice)`。
+
+### 3.3 `__call__`
+
+如果类中定义了 `__call__` 方法，那么就可以对实例进行调用。
+
+```python
+class Point(object):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __call__(self):
+        return sqrt(pow(self.x, 2) + pow(self.y, 2))
+
+if __name__ == "__main__":
+    p = Point(3, 4)
+    print(p()
+```
+
 ## 参考
 
 * [知乎 - Python 中的 classmethod 和 staticmethod 有什么具体用途？](https://www.zhihu.com/question/20021164)
 * [Runoob - Python super 详解](https://www.runoob.com/w3cnote/python-super-detail-intro.html)
+* [Python 的魔术方法](https://segmentfault.com/a/1190000007256392)
