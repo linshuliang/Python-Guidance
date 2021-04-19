@@ -58,5 +58,5 @@ I am child process (10704) and my parent is (10688)
 
 ### 2.2 Python multiprocessing 模块
 
-[multiprocessing 个人总结](./multi-process/README.md)
-[Python官方文档 multiprocessing 模块](https://docs.python.org/zh-cn/3.8/library/multiprocessing.html)
+* [multiprocessing 个人总结](./multi-process/README.md)
+* [Python官方文档 multiprocessing 模块](https://docs.python.org/zh-cn/3.8/library/multiprocessing.html)

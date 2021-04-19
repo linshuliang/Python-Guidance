@@ -65,11 +65,71 @@ Exit fn
 
 `join([timeout])`
 
-> 如果可选参数 timeout 是 None （默认值），则该方法将阻塞子进程以外的所有进程，当子进程执行完毕，父进程才会继续执行，它通常用于进程间的同步。如果 timeout 是一个正数，它最多会阻塞 timeout 秒。
+> 如果可选参数`timeout`是`None`（默认值），则该方法将阻塞子进程以外的所有进程，当子进程执行完毕，父进程才会继续执行，它通常用于进程间的同步。如果`timeout`是一个正数，它最多会阻塞`timeout`秒。
+> 一个进程可以被`join` 多次。
+> 进程无法`join`自身，因为这会导致死锁。尝试在进程启动之前`join`进程是错误的。
 
-`close`
+`close()`
 
-> 关闭 Process 对象，释放与之关联的所有资源。
+> 关闭`Process`对象，释放与之关联的所有资源。
+
+`run()`
+
+表示进程活动的方法，函数实现为:
+
+```python
+def run():
+    target(*args, **kwargs)
+```
+
+`terminate()`
+
+> 终止进程。在Unix上，这是使用`SIGTERM`信号完成的；
+
+`kill()`
+
+> 终止进程。在Unix上使用`SIGKILL`信号；
+
+`exitcode`
+
+> 子进程的退出代码，如果进程尚未终止时`exitcode`为`None`；
+
+`is_alive()`
+
+> 返回进程是否还活着。从 `start()` 方法返回到子进程终止之前，进程对象都处于活动状态。
+
+### multiprocessing.Process 类的方法
+
+```python
+# coding=utf-8
+import time
+import multiprocessing
+import signal
+
+# 创建 Process 对象
+p = multiprocessing.Process(target=time.sleep, args=(1000,))
+
+# 当前进程并没有 start， is_alive() 返回 False
+print(p, p.is_alive())
+
+# 启动进程
+p.start()
+
+# 当前进程已经 start, 而且仍未终止， is_alive() 返回 True
+print(p, p.is_alive())
+
+# 终止进程
+p.terminate()
+
+# 间隔 0.1s
+time.sleep(0.1)
+
+# 进程已终止，is_alive() 返回 False
+print(p, p.is_alive())
+
+# 进程退出时，返回码为 p.exitcode
+print(p.exitcode == -signal.SIGTERM)  # True
+```
 
 ## 2 进程之间的通信
 
@@ -135,15 +195,15 @@ if __name__ == "__main__":
 
 `put(obj, block=True, timeout=None)`
 
-> 将 `obj` 放入队列。如果可选参数`block`是`True`而且`timeout`是`None`，将会阻塞当前进程，直到有空的缓冲槽。
-> 如果 timeout 是正数，将会在阻塞了最多 timeout 秒之后还是没有可用的缓冲槽时抛出 queue.Full 异常。
-> 当`block`是`False`时，仅当有可用缓冲槽时才放入对象，否则抛出 `queue.Full` 异常 (在这种情形下 timeout 参数会被忽略)。
+> 将`obj`放入队列。如果可选参数`block`是`True`而且`timeout`是`None`，将会阻塞当前进程，直到有空的缓冲槽。
+> 如果`timeout`是正数，将会在阻塞了最多`timeout`秒之后还是没有可用的缓冲槽时抛出`queue.Full`异常。
+> 当`block`是`False`时，仅当有可用缓冲槽时才放入对象，否则抛出`queue.Full` 异常 (在这种情形下`timeout`参数会被忽略)。
 
 `get(block=True, timeout=None)`
 
-> 从队列中取出并返回对象。如果可选参数 block 是 True (默认值) 而且 timeout 是 None (默认值), 将会阻塞当前进程，直到队列中出现可用的对象。
-> 如果 timeout 是正数，将会在阻塞了最多 timeout 秒之后还是没有可用的对象时抛出 queue.Empty 异常。
-> 当 block 是 False 时，仅当有可用对象能够取出时返回，否则抛出 `queue.Empty` 异常 (在这种情形下 timeout 参数会被忽略)。
+> 从队列中取出并返回对象。如果可选参数`block`是`True`(默认值) 而且`timeout` 是`None` (默认值), 将会阻塞当前进程，直到队列中出现可用的对象。
+> 如果`timeout`是正数，将会在阻塞了最多`timeout`秒之后还是没有可用的对象时抛出`queue.Empty`异常。
+> 当`block`是`False`时，仅当有可用对象能够取出时返回，否则抛出 `queue.Empty` 异常 (在这种情形下`timeout`参数会被忽略)。
 
 `put_nowait(obj)`
 
@@ -217,7 +277,7 @@ if __name__=='__main__':
     print('Waiting for all subprocesses done...')
     p.close()
     p.join()
-    print('All subprocesses done.'
+    print('All subprocesses done.')
 ```
 
 运行结果：
@@ -263,7 +323,7 @@ All subprocesses done.
 
 ### 4.1 Manager - 服务进程管理器
 
-由 `Manager` 返回的管理器对象控制一个服务进程，
+由 `Manager()` 返回的管理器对象控制一个服务进程，
 该进程保存Python对象，并允许其他进程使用代理操作它们。
 
 ```python
