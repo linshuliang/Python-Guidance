@@ -1,6 +1,6 @@
 # coding=utf-8
 import os
-from multiprocessing import Process
+from multiprocessing import Process, set_start_method
 
 
 def info():
@@ -19,6 +19,7 @@ def fn(para):
 
 if __name__ == "__main__":
     info()
+    set_start_method("fork")
     p = Process(target=fn, args=('oppo', ))
     p.start()
     p.join()

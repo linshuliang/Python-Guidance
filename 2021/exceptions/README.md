@@ -43,7 +43,7 @@ else:
     print("Success : Open File %s" % file_name)
     fh.close()
     os.system("cat %s" % file_name)
-    os.remove(file_name
+    os.remove(file_name)
 ```
 
 ### 2.2 except 不带任何异常类型

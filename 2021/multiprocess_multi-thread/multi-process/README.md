@@ -1,5 +1,36 @@
 # Python multiprocessing 模块
 
+`multiprocessing` 支持三种启动进程的方法：
+
+* `spawn`
+* `fork`
+* `forkserver`
+
+可通过调用:
+
+```python
+multiprocessing.set_start_method(method : str)
+```
+
+来设定进程的启动方法。
+
+例如：
+
+```python
+import multiprocessing as mp
+
+def foo(q : mp.Queue):
+    q.put("Hello")
+
+if __name__ == "__main__":
+    mp.set_start_method("fork")
+    q = mp.Queue()
+    p = mp.Process(target=foo, args=(q,))
+    p.start()
+    print(q.get())
+    p.join()
+```
+
 ## 1 `Process` 类 - 创建进程
 
 `multiprocessing`模块中包含的`Process`是一个用于创建进程对象的类。
@@ -182,7 +213,7 @@ if __name__ == "__main__":
     q = Queue()  # 父进程创建Queue，并传给各个子进程
 
     pw = Process(target=write_task, args=(q,))
-    pr = Process(target=read_task, args=(q,))
+    pr = Process(target=read_task,  args=(q,))
 
     pr.start()   # 启动子进程 pr，读取
     pw.start()   # 启动子进程 pw，写入
@@ -249,6 +280,10 @@ if __name__ == "__main__":
 
 * `send` ：发送信息
 * `recv` ：接收信息
+
+### 2.3 Connection - 连接对象
+
+`Connection`对象允许收发可以序列化的对象或字符串。它们可以看作面向消息的连接套接字。
 
 ## 3 Pool - 进程池
 
