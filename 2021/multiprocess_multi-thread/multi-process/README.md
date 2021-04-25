@@ -252,7 +252,7 @@ if __name__ == "__main__":
 def Pipe(duplex: bool = ...) -> Tuple[connection.Connection, connection.Connection]:
 ```
 
-`Pipe` 返回一对`Connection`对象`(conn1, conn2)`，分别表示管道的两端。
+`Pipe`返回一对`Connection`对象`(conn1, conn2)`，分别表示管道的两端。
 
 参数 `duplex`:
 
@@ -276,14 +276,60 @@ if __name__ == "__main__":
     print(parent_conn.recv())  # 接收信号
 ```
 
-`Pipe` 对象方法：
-
-* `send` ：发送信息
-* `recv` ：接收信息
-
 ### 2.3 Connection - 连接对象
 
 `Connection`对象允许收发可以序列化的对象或字符串。它们可以看作面向消息的连接套接字。
+
+#### `class multiprocessing.connection.Connection`
+
+`send(obj)`
+
+> 将一个对象发送到连接的另一端，可用 `recv` 读取。
+
+`recv()`
+
+> 返回由另一端使用 `send()` 发送的对象，
+> 该方法会一直堵塞，直到接收到对象，
+> 如果对端关闭了连接，或者没有东西可接收，将抛出 `EOFError` 异常。
+
+`poll([timeout])`
+
+> 返回连接对象中是否有可以读取的数据。是返回`True`，否返回`False`；
+> 如果未指定 `timeout`，此方法会马上返回；
+> 如果 `timeout` 是一个数字，则指定了最大堵塞的秒数；
+> 如果 `timeout` 是 `None`，那么将一直等待，不会超时；
+
+`send_bytes(buffer)`
+
+> 从一个字节类对象(`bytes-like object`)中取出字节数组，并作为一条完整消息发送。
+
+`recv_bytes(maxlength)`
+
+> 以字符串形式，返回一条从连接对象另一端发送过来的字节数据。
+> 此方法在接收到数据前一直堵塞。
+> 如果连接对象被对端关闭，或者没有数据可读取，将抛出 `EOFError` 异常。
+> 如果给定了 `maxlength` 并且消息长于 `maxlength` 那么将抛出 `OSError` 并且该连接对象将不再可读。
+
+#### multiprocessing.connection.Connection Demo
+
+```python
+# coding=utf-8
+import multiprocessing as mp
+
+s, r = mp.Pipe()
+
+# 发送对象
+s.send([1, 'hello', None])
+# 接收对象
+print(r.recv())
+
+# 发送字节类对象
+s.send_bytes(b'thank you')
+# 接收字节类对象
+print(r.recv_bytes())
+```
+
+监听者和客户端常用到`Connection`，详情可查看[监听者和客户端](./m-Connection/README.md)
 
 ## 3 Pool - 进程池
 
