@@ -123,11 +123,11 @@ def run():
 
 `exitcode`
 
-> 子进程的退出代码，如果进程尚未终止时`exitcode`为`None`；
+> 子进程的退出代码，如果进程尚未终止，`exitcode`为`None`；
 
 `is_alive()`
 
-> 返回进程是否还活着。从 `start()` 方法返回到子进程终止之前，进程对象都处于活动状态。
+> 返回进程是否还活着。从`start()`方法返回到子进程终止之前，进程对象都处于活动状态。
 
 ### multiprocessing.Process 类的方法
 
@@ -234,11 +234,11 @@ if __name__ == "__main__":
 
 > 从队列中取出并返回对象。如果可选参数`block`是`True`(默认值) 而且`timeout` 是`None` (默认值), 将会阻塞当前进程，直到队列中出现可用的对象。
 > 如果`timeout`是正数，将会在阻塞了最多`timeout`秒之后还是没有可用的对象时抛出`queue.Empty`异常。
-> 当`block`是`False`时，仅当有可用对象能够取出时返回，否则抛出 `queue.Empty` 异常 (在这种情形下`timeout`参数会被忽略)。
+> 当`block`是`False`时，仅当有可用对象能够取出时返回，否则抛出`queue.Empty`异常 (在这种情形下`timeout`参数会被忽略)。
 
 `put_nowait(obj)`
 
-> 等同于 `put(obj, False)`，仅当有可用缓冲槽时才放入对象，否则抛出 `queue.Full` 异常。
+> 等同于`put(obj, False)`，仅当有可用缓冲槽时才放入对象，否则抛出`queue.Full`异常。
 
 `get_nowait()`
 
@@ -257,7 +257,7 @@ def Pipe(duplex: bool = ...) -> Tuple[connection.Connection, connection.Connecti
 参数 `duplex`:
 
 * 如果 `duplex` 被置为 `True` (默认值)，那么该管道是双向的。
-* 如果 `duplex` 被置为 `False` ，那么该管道是单向的，即 `conn1` 只能用于接收消息，而 `conn2` 仅能用于发送消息。
+* 如果 `duplex` 被置为 `False`，那么该管道是单向的，即 `conn1` 只能用于接收消息，而 `conn2` 仅能用于发送消息。
 
 示例：
 
@@ -308,7 +308,7 @@ if __name__ == "__main__":
 > 以字符串形式，返回一条从连接对象另一端发送过来的字节数据。
 > 此方法在接收到数据前一直堵塞。
 > 如果连接对象被对端关闭，或者没有数据可读取，将抛出 `EOFError` 异常。
-> 如果给定了 `maxlength` 并且消息长于 `maxlength` 那么将抛出 `OSError` 并且该连接对象将不再可读。
+> 如果给定了 `maxlength` 并且消息长于 `maxlength`，那么将抛出 `OSError` 并且该连接对象将不再可读。
 
 #### multiprocessing.connection.Connection Demo
 
@@ -352,7 +352,7 @@ def long_time_task(name):
 
 if __name__=='__main__':
     print('Parent process %s.' % os.getpid())
-    p = Pool(4)  # 线程池的大小是4
+    p = Pool(4)  # 进程池的大小是4
     for i in range(5):
         p.apply_async(long_time_task, args=(i,))
     print('Waiting for all subprocesses done...')
@@ -399,7 +399,7 @@ All subprocesses done.
 
 优缺点比较：
 
-* 使用服务进程的管理器比使用共享内存对象更灵活，因为它们可以支持任意对象类型。此外，单个管理器可以通过网络由不同计算机上的进程共享。
+* 使用服务进程管理器比使用共享内存对象更灵活，因为它们可以支持任意对象类型。此外，单个管理器可以通过网络由不同计算机上的进程共享。
 * 共享内存比服务进程快。
 
 ### 4.1 Manager - 服务进程管理器

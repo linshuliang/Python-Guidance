@@ -86,10 +86,11 @@ from multiprocessing.connection import Client
 addr = ('localhost', 6000)
 
 with Client(addr, authkey=b'secret password') as conn:
-
+    # 接收对象
     print(conn.recv())
+    # 接收字节对象
     print(conn.recv_bytes())
-
+    # 初始化一个 array 对象
     arr = array('i', [0, 0, 0, 0, 0])
     print(conn.recv_bytes_into(arr))
     print(arr)
