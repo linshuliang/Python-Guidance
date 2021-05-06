@@ -227,23 +227,33 @@ if __name__ == "__main__":
 
 ## 5 上下文管理器 (Context Manager)
 
+什么是上下文？其实我们可以简单地把它理解成环境。
+从一篇文章中抽出一句话，让你来理解，我们会说这是断章取义。为什么？因为我们压根就没考虑到这句话的上下文是什么。
+
+编程中的上下文也与此类似，比如『进程上下文』，指的是一个进程在执行的时候 :
+
+* CPU 的所有寄存器中的值
+* 进程的状态以及堆栈上的内容
+
+当系统需要切换到其他进程时，系统会保留当前进程的上下文，也就是运行时的环境，以便再次执行该进程。
+
+### 5.1 上下文管理器协议
+
 > 上下文管理器协议，是指要实现对象的 `__enter__()` 和 `__exit__()` 方法。
 
-上下文管理器也就是支持上下文管理器协议的对象，也就是包含了`__enter__()` 和 `__exit__()` 实现方法的类的对象。
+上下文管理器也就是支持上下文管理器协议的对象，也就是包含了`__enter__()`和`__exit__()`实现方法的类对象。
 
 * `__enter__()` 方法返回对象本身
 * `__exit__()` 方法负责清理工作：例如释放资源、关闭文件等。
 
-### 5.1 自定义上下文管理器
+### 5.2 自定义上下文管理器
 
 ```python
 # coding=utf-8
 from math import sqrt, pow
 
+
 class Point(object):
-    """
-    class Point 属于上下文管理器
-    """
     def __init__(self, x, y):
         print("Initializing")
         self.x, self.y = x, y
@@ -254,7 +264,12 @@ class Point(object):
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
         print("Exiting Context")
-        return False
+        print(exc_type)  # <type 'exceptions.AttributeError'>
+        print(exc_value)  # 'Point' object has no attribute 'get_length'
+        print(exc_traceback)  # <traceback object at 0x102c13050>
+        return True  # 返回 True， 则忽略异常，不再对异常进行处理
+        # return False  # 返回 False，重新抛出异常，让 with 之外的语句逻辑来处理异常
+        # return        # 返回 None， 重新抛出异常，让 with 之外的语句逻辑来处理异常
 
     def get_distance(self):
         d = sqrt(pow(self.x, 2) + pow(self.y, 2))
@@ -264,6 +279,7 @@ class Point(object):
 if __name__ == "__main__":
     with Point(3, 4) as pt:
         print("Distance = ", pt.get_distance())
+        pt.get_length()
 ```
 
 输出为：
@@ -271,19 +287,19 @@ if __name__ == "__main__":
 ```shell
 Initializing
 Entering Context
-('Distance = ', 5.0)
+'Distance = ', 5.0
 Exiting Context
 ```
 
 上面的 `with` 语句的执行过程为：
 
-* `Point(3, 4)` 产生了一个上下文管理器对象；
-* 调用 `__enter__()` 方法，并将`__enter__()`方法的返回值赋给了`as`子句中的变量`pt`;
-* 不管执行过程中是否发生异常，都执行上下文管理器中的`__exit__()` 方法。`__exit__()`方法负责执行清理工作，例如释放资源，关闭文件等。
-  * 如果执行过程中出现异常，或者执行了`break/continue/return`，则以`None`作为参数调用`__exit__(None, None, None)`；
-  * 如果执行过程中出现了异常，则以`sys.exc_info`得到等异常信息作为参数调用 `__exit__(exc_type, exc_value, exc_traceback)`；
-    * 出现异常时，如果`__exit__(exc_type, exc_value, exc_traceback)` 返回 `False` 或者 `None`，则重新抛出异常，让`with`外的语句来处理异常。
-    * 如果 `__exit__` 的返回值为 `True`，则忽略异常，不再对异常进行处理。
+* `Point(3, 4)`产生了一个上下文管理器对象；
+* 调用`__enter__()`方法，并将`__enter__()`方法的返回值赋给了`as`子句中的变量`pt`;
+* 不管执行过程中是否发生异常，都执行上下文管理器中的`__exit__()`方法。`__exit__()`方法负责执行清理工作，例如释放资源，关闭文件等。
+  * 如果执行过程中没有出现异常，或者语句块中执行了语句`break/continue/return`，则以`None`作为参数调用`__exit__(None, None, None)`；
+  * 如果执行过程中出现了异常，则以`sys.exc_info`得到的异常信息作为参数调用`__exit__(exc_type, exc_value, exc_traceback)`；
+    * 出现异常时，如果`__exit__` 返回`False`或者`None`，则重新抛出异常，让`with`外的语句来处理异常。
+    * 如果`__exit__`的返回值为`True`，则忽略异常，不再对异常进行处理。
 
 ## 参考
 

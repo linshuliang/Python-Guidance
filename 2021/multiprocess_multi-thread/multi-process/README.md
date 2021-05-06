@@ -97,7 +97,7 @@ Exit fn
 `join([timeout])`
 
 > 如果可选参数`timeout`是`None`（默认值），则该方法将阻塞子进程以外的所有进程，当子进程执行完毕，父进程才会继续执行，它通常用于进程间的同步。如果`timeout`是一个正数，它最多会阻塞`timeout`秒。
-> 一个进程可以被`join` 多次。
+> 一个进程可以被`join`多次。
 > 进程无法`join`自身，因为这会导致死锁。尝试在进程启动之前`join`进程是错误的。
 
 `close()`
@@ -140,7 +140,7 @@ import signal
 # 创建 Process 对象
 p = multiprocessing.Process(target=time.sleep, args=(1000,))
 
-# 当前进程并没有 start， is_alive() 返回 False
+# 当前进程并没有 start，is_alive() 返回 False
 print(p, p.is_alive())
 
 # 启动进程
@@ -242,7 +242,7 @@ if __name__ == "__main__":
 
 `get_nowait()`
 
-> 等同于 `get(False)`，仅当有可用对象能够取出时返回，否则抛出 `queue.Empty` 异常。
+> 等同于 `get(False)`，仅当有可用对象能够取出时返回，否则抛出`queue.Empty`异常。
 
 ### 2.2 `Pipe` - 多进程中的管道
 
@@ -379,7 +379,7 @@ Task 2 runs 2.44 seconds.
 All subprocesses done.
 ```
 
-可看出，`task 0, 1, 2, 3` 是立刻执行的，而`task 4` 则要等待前面某个`task`完成后才能执行。
+可看出，`task 0, 1, 2, 3` 是立刻执行的，而`task 4`则要等待前面某个`task`完成后才能执行。
 因为 `Pool` 被初始化为4，同一时刻最多有4个进程在执行。
 
 `Pool`方法说明：
@@ -404,8 +404,8 @@ All subprocesses done.
 
 ### 4.1 Manager - 服务进程管理器
 
-由 `Manager()` 返回的管理器对象控制一个服务进程，
-该进程保存Python对象，并允许其他进程使用代理操作它们。
+管理器`Manager`提供了一种创建共享数据的方法，从而可以在不同进程中共享，甚至可以通过网络跨机器共享数据。
+管理器维护一个用于管理`共享对象`的服务。其他进程可以通过代理访问这些共享对象。
 
 ```python
 import multiprocessing
