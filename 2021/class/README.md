@@ -542,7 +542,7 @@ class Point(object):
 
 if __name__ == "__main__":
     p = Point(3, 4)
-    print(p()
+    print(p())
 ```
 
 ## 参考

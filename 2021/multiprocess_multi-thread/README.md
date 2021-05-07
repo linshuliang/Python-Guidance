@@ -22,7 +22,7 @@
 
 ### 2.1 `fork()` 函数
 
-`Unix/Linux` 操作系统提供了一个`fork()`系统调用。
+`Unix/Linux`操作系统提供了一个`fork()`系统调用。
 普通的函数调用，调用一次，返回一次。
 但`fork()`调用一次，返回两次。
 因为操作系统将当前进程（称为父进程）复制了一份（称为子进程），然后，分别在父进程和子进程内返回，返回值分别是：
@@ -79,4 +79,5 @@ I am child process (10704) and my parent is (10688)
 
 ### 3.1 多线程
 
-[Python 多线程](./multi-thread/README.md)
+* [threading 个人总结](./multi-thread/README.md)
+* [Python官方文档 threading 模块](https://docs.python.org/zh-cn/3.6/library/threading.html)
