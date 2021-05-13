@@ -13,10 +13,9 @@ if __name__ == '__main__':
     with multiprocessing.Manager() as manager:
         d = manager.dict()
         l = manager.list(range(10))
-
         p = multiprocessing.Process(target=f, args=(d, l))
         p.start()
         p.join()
-
         print(d)
         print(l)
+        manager.shutdown()
