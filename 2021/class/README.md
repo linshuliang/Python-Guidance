@@ -420,7 +420,22 @@ if __name__ == "__main__":
 
 ### 2.3 `super` 详解
 
-在类的继承中，如果派生类重定义了某个方法，该方法会覆盖基类的同名方法。如果想调用基类的方法，可通过 `super` 来实现。
+在类的继承中，如果派生类重定义了某个方法，该方法会覆盖基类的同名方法。
+如果想调用基类的方法，可通过 `super` 来实现。
+
+语法：
+
+```python
+super(type[, object-or-type])
+```
+
+* 参数：
+  * `type` ：类
+  * `object-or-type` ：类，一般是 `self`
+
+> 在 Python3 中，`super().xxx` 等同于 `super(class_name, self).xxx`
+
+Demo：
 
 ```python
 class Animal(object):
@@ -435,9 +450,16 @@ class Dog(Animal):
         super().greet()
         print("Wang")
 
+class Cat(Animal):
+    def greet(self):
+        super(Cat, self).greet()
+        print("Miao")
+
 if __name__ == "__main__":
     d = Dog("haba")
     d.greet()
+    c = Cat("bu'ou")
+    c.greet()
 ```
 
 ## 3 定制类和魔法方法
@@ -451,7 +473,7 @@ if __name__ == "__main__":
 * `__iter__(self)` ：定义了 `__iter__` 方法的类的实例都是可迭代的，该方法返回一个可迭代对象。
 * `__setitem__(self,key,val)` : 调用 `obj[key] = val` 等同于 `obj.__setitem__(key, val)`，设置键-值。
 * `__getitem__(self, key)` : 调用 `obj[key]` 等同于 `obj.__getitem__(key)`，取键`key`的对应值。
-* `__delitem__(self, key)` : 调用 `del obj[key]` 等同于 `del obj[key]`，删除键-值对。
+* `__delitem__(self, key)` : 调用 `del obj[key]` 等同于 `obj.__delitem__(key)`，删除键-值对。
 * `__call__(self)` : 可调用的类，实例可像函数那样调用。
 
 ### 3.1 `__iter__` 方法

@@ -15,6 +15,14 @@ class Dog(Animal):
         print("Wang")
 
 
+class Cat(Animal):
+    def greet(self):
+        super(Cat, self).greet()
+        print("Miao")
+
+
 if __name__ == "__main__":
     d = Dog("haba")
     d.greet()
+    c = Cat("bu'ou")
+    c.greet()
