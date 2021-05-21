@@ -146,16 +146,28 @@ import helloworld_pb2
 import helloworld_pb2_grpc
 
 
+
 class Greeter(helloworld_pb2_grpc.GreeterServicer):
+    """定义服务类，最好与 .proto 中定义的保持一致"""
     def SayHello(self, request, context):
+        """服务类的函数
+
+        request : 请求
+        context : 上下文
+        """
         return helloworld_pb2.HelloReply(message="Hello, %s!" % request.name)
 
 
 def serve():
+    # 以异步执行的多线程并发方式创建一个 grpc 服务，线程池的阈值是10
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    # 部署服务
     helloworld_pb2_grpc.add_GreeterServicer_to_server(Greeter(), server)
+    # 设置服务的端口为 50051
     server.add_insecure_port('[::]:50051')
+    # 启动服务
     server.start()
+    # 等待结束
     server.wait_for_termination()
 
 
@@ -176,9 +188,15 @@ import helloworld_pb2_grpc
 
 
 def run():
+    # grpc.insecure_channel 创建通信连接
     with grpc.insecure_channel('localhost:50051') as channel:
+        # 创建 stub
         stub = helloworld_pb2_grpc.GreeterStub(channel)
-        response = stub.SayHello(helloworld_pb2.HelloRequest(name='you'))
+        # 创建 request 实例
+        request = helloworld_pb2.HelloRequest(name='you')
+        # 根据 stub，调用服务函数
+        response = stub.SayHello(request)
+    # 打印返回的结果
     print("Greeter client received: ", response.message)
 
 
