@@ -1,6 +1,6 @@
 # Flask
 
-`Flask` 是典型的微框架，作为 Web 框架来说，它仅保留了核心功能：
+`Flask` 是典型的微框架，作为 web 框架来说，它仅保留了核心功能：
 
 * 请求响应处理
 * 模板渲染
@@ -32,11 +32,11 @@ flask run
 则会输出：
 
 ```shell
- * Environment: production
-   WARNING: This is a development server. Do not use it in a production deployment.
-   Use a production WSGI server instead.
- * Debug mode: off
- * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+* Environment: production
+  WARNING: This is a development server. Do not use it in a production deployment.
+  Use a production WSGI server instead.
+* Debug mode: off
+* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 
 * 打开浏览器，地址栏填入 `http://127.0.0.1:5000/` 即可访问主页。
@@ -58,7 +58,7 @@ flask run
 
 > Flask 的默认设置：执行 `flask run` 时会自动调用当前路径中的 `app.py` 或者 `wsgi.py`。
 
-如果当前路径没有 `app.py` 或者 `wsgi.py` ，则需通过设置环境变量 `FLASK_APP` 来告诉 Flask 要启动的程序：
+如果当前路径没有 `app.py` 或者 `wsgi.py`，则需通过设置环境变量 `FLASK_APP` 来告诉 Flask 要启动的程序：
 
 ```shell
 export FLASK_APP=hello.py
@@ -100,16 +100,16 @@ def login():
         return "flask.request.method : GET\n"
 ```
 
-HTTP 方法（通常也被称为“动作”）告诉服务器一个页面请求要做 什么。以下是常见的方法：
+HTTP 方法（通常也被称为“动作”）告诉服务器一个页面请求要做什么。以下是常见的方法：
 
 | HTTP 方法  | 作用 |
 | :------:  | :------------------- |
-| GET  | 浏览器告诉服务器：只要得到页面上的信息并发送这些信息 |
-| HEAD | 浏览器告诉服务器想要得到信息，但是只要得到信息头 就行了，页面内容不要。 一个应用应该像接受到一个 GET 请求一样运行，但是不传递实际的内容。在 Flask 中，你根本不必理会这个，下层的 Werkzeug 库会为你处理好 |
-| POST | 浏览器告诉服务器想要向 URL 发表一些新的信息，服务器必须确保数据被保存好且只保存了一次。 HTML 表单实际上就是使用这个请求向服务器传送数据的。|
-| PUT  | 与 POST 方法类似，不同的是服务器可能触发多次储存过程而把旧的值覆盖掉。你可能会问这样做有什么用？这样做是有原因的。假设在传输过程中连接丢失的情况下，一个处于浏览器和服务器之间的系统可以在不中断的情况下安全地接收第二次请求。在这种情况下，使用 POST 方法就无法做到了，因为它只被触发一次。|
+| GET | 浏览器告诉服务器：只要得到页面上的信息并发送这些信息 |
+| HEAD | 浏览器告诉服务器想要得到信息，但是只要得到信息头就行了，页面内容不要。一个应用应该像接受到一个 GET 请求一样运行，但是不传递实际的内容。在 Flask 中，你根本不必理会这个，下层的 Werkzeug 库会为你处理好 |
+| POST | 浏览器告诉服务器想要向 URL 发表一些新的信息，服务器必须确保数据被保存好且只保存了一次。 HTML表单实际上就是使用这个请求向服务器传送数据的 |
+| PUT | 与 POST 方法类似，不同的是服务器可能触发多次储存过程而把旧的值覆盖掉。你可能会问这样做有什么用？这样做是有原因的。假设在传输过程中连接丢失的情况下，一个处于浏览器和服务器之间的系统可以在不中断的情况下安全地接收第二次请求。在这种情况下，使用 POST 方法就无法做到了，因为它只被触发了一次。|
 | DELETE | 删除给定位置的信息 |
-| OPTIONS | 为客户端提供一个查询 URL 支持哪些方法的捷径。从 Flask 0.6 开始，自动为你实现了这个方法。 有趣的是在 HTML4 和 XHTML1 中，表单只能使用 GET 和 POST 方法。但是 JavaScript 和未来的 HTML 标准中可以使用其他的方法。此外， HTTP 近来已经变得相当 流行，浏览器不再只是唯一使用 HTTP 的客户端。比如许多版本控制系统也使用 HTTP |
+| OPTIONS | 为客户端提供一个查询 URL 支持哪些方法的捷径。从 Flask 0.6 开始，自动为你实现了这个方法。|
 
 ## 3 Flask config - 配置处理
 
@@ -117,7 +117,7 @@ HTTP 方法（通常也被称为“动作”）告诉服务器一个页面请求
 
 ```python
 app = Flask(__name__)
-app.condig['DEBUG'] = True
+app.config['DEBUG'] = True
 ```
 
 ## 参考

@@ -60,19 +60,19 @@ def GetFeature(self, request, context):
 ### 2.2 response-streaming RPC
 
 ```python
-    def ListFeatures(self, request, context):
-        """生成器
-        """
-        left = min(request.lo.longitude, request.hi.longitude)
-        right = max(request.lo.longitude, request.hi.longitude)
-        top = max(request.lo.latitude, request.hi.latitude)
-        bottom = min(request.lo.latitude, request.hi.latitude)
-        for feature in self.db:
-            if (feature.location.longitude >= left and
-                    feature.location.longitude <= right and
-                    feature.location.latitude >= bottom and
-                    feature.location.latitude <= top):
-                yield feature
+def ListFeatures(self, request, context):
+    """生成器
+    """
+    left = min(request.lo.longitude, request.hi.longitude)
+    right = max(request.lo.longitude, request.hi.longitude)
+    top = max(request.lo.latitude, request.hi.latitude)
+    bottom = min(request.lo.latitude, request.hi.latitude)
+    for feature in self.db:
+        if (feature.location.longitude >= left and
+                feature.location.longitude <= right and
+                feature.location.latitude >= bottom and
+                feature.location.latitude <= top):
+            yield feature
 ```
 
 请求`request`是一个对象，响应`response`是一个可迭代对象(`Iterable Object`)。
@@ -80,26 +80,26 @@ def GetFeature(self, request, context):
 ### 2.3 request-streaming RPC
 
 ```python
-    def RecordRoute(self, request_iterator, context):
-        point_count = 0
-        feature_count = 0
-        distance = 0.0
-        prev_point = None
+def RecordRoute(self, request_iterator, context):
+    point_count = 0
+    feature_count = 0
+    distance = 0.0
+    prev_point = None
 
-        start_time = time.time()
-        for point in request_iterator:
-            point_count += 1
-            if get_feature(self.db, point):
-                feature_count += 1
-            if prev_point:
-                distance += get_distance(prev_point, point)
-            prev_point = point
+    start_time = time.time()
+    for point in request_iterator:
+        point_count += 1
+        if get_feature(self.db, point):
+            feature_count += 1
+        if prev_point:
+            distance += get_distance(prev_point, point)
+        prev_point = point
 
-        elapsed_time = time.time() - start_time
-        return route_guide_pb2.RouteSummary(point_count=point_count,
-                                            feature_count=feature_count,
-                                            distance=int(distance),
-                                            elapsed_time=int(elapsed_time))
+    elapsed_time = time.time() - start_time
+    return route_guide_pb2.RouteSummary(point_count=point_count,
+                                        feature_count=feature_count,
+                                        distance=int(distance),
+                                        elapsed_time=int(elapsed_time))
 ```
 
 请求`request`是一个可迭代对象(Iterable Object)，响应`response`是一个对象。

@@ -12,7 +12,7 @@ URL (Uniform Resource Locator) : 统一资源定位器。它是`www`页的地址
 * 端口 (`port`) ：对某些资源的访问，需给相应的服务器提供端口号；
 * 路径 (`path`) ：指出服务器上某资源的位置。格式与DOS系统中的格式一样，通常有 `目录/子目录/文件名` 这样的结构组成。
 
-> URL 的格式为：scheme://host:port/path
+> URL 的格式为：`scheme://host:port/path`
 
 例如：`https://zhuanlan.zhihu.com/p/71374158`
 
