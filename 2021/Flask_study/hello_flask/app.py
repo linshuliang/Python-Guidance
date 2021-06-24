@@ -1,6 +1,5 @@
 # coding=utf-8
 from flask import Flask
-from flask import escape
 
 # print("name: ", __name__)  # app
 app = Flask(__name__)
@@ -18,4 +17,5 @@ def totoro():
 
 @app.route("/user/<name>")
 def user_page(name):
+    from flask import escape
     return "User: %s\n" % escape(name)

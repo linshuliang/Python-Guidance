@@ -32,7 +32,7 @@ service RouteGuide {
 | 简单RPC(`simple RPC`) | The **client** sends a `request` to the **server** using the `stub`(存根), waiting for a `response` to come back, just like a normal function call |
 | 应答流式RPC(`response-streaming RPC`) | 在`response`前加关键字`stream`，就能指定一个`response-streaming`方法。The **client** sends a `request` the **server** and gets a return stream |
 | 请求流式RPC(`request-streaming RPC`) | 在`request`前加关键字`stream`，就能指定一个`request-streaming`方法。The client writes a sequence of messages and sends them to the server. Once the **client** has finished writing the meassages, it waits for the **server** to read them all and return its response |
-| 双向流式RPC(`bidirectional-streaming RPC`) | 一个 双向流式 RPC 是双方使用读写流去发送一个消息序列。两个流独立操作，因此客户端和服务器可以以任意喜欢的顺序读写：比如， 服务器可以在写入响应前等待接收所有的客户端消息，或者可以交替的读取和写入消息，或者其他读写的组合。 每个流中的消息顺序被预留 |
+| 双向流式RPC(`bidirectional-streaming RPC`) | 一个双向流式 RPC 是双方使用读写流去发送一个消息序列。两个流独立操作，因此客户端和服务器可以以任意喜欢的顺序读写：比如， 服务器可以在写入响应前等待接收所有的客户端消息，或者可以交替的读取和写入消息，或者其他读写的组合。 每个流中的消息顺序被预留 |
 
 ## 2 创建服务器
 
